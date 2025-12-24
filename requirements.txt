@@ -1,0 +1,22 @@
+# FastAPI and Server
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.6
+
+# Data Validation
+pydantic>=2.0.0
+
+# Document Processing
+pypdf>=3.0.0
+python-docx>=0.8.11
+
+# AI/LLM Integration
+google-generativeai>=0.3.0
+
+# Optional: For production deployments
+# gunicorn>=21.2.0
+# python-jose[cryptography]>=3.3.0  # For JWT authentication
+
+# Optional: For advanced code execution (sandbox)
+# docker>=7.0.0
+# requests>=2.31.0

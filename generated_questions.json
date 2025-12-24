@@ -1,0 +1,390 @@
+{
+  "total_questions": 3,
+  "generated_for": {
+    "resume_preview": "\n    JANE SMITH\n    Software Engineer\n    jane.smith@email.com | (555) 123-4567\n    \n    PROFESSIONAL SUMMARY\n    Experienced software engineer with 4+ years of expertise in Python, Java, and JavaScri...",
+    "jd_preview": "\n    BACKEND DEVELOPER POSITION\n    Company: InnovateTech Solutions\n    \n    JOB DESCRIPTION\n    We're seeking a talented Backend Developer to join our engineering team.\n    You'll work on building hi..."
+  },
+  "questions": [
+    {
+      "id": "validateApiPath",
+      "title": "API Request Path Validator",
+      "difficulty": "Easy",
+      "category": "Data Structures",
+      "description": "You are building a middleware for a web framework. Your task is to implement a function that validates an incoming request path against a list of registered API endpoint patterns. The patterns can include a special wildcard character '*' which matches any single segment of the path (segments are separated by '/').\n\nFor example, the pattern `/users/*/profile` would match `/users/123/profile` and `/users/jane/profile`, but not `/users/profile` or `/users/123/settings/privacy`.\n\nYour function should return `true` if the request path matches any of the registered patterns, and `false` otherwise.",
+      "functionName": "validateApiPath",
+      "testCases": [
+        {
+          "input": "{\"patterns\": [\"/users/profiles\", \"/users/*/settings\"], \"path\": \"/users/123/settings\"}",
+          "output": "true",
+          "parsedInput": [
+            {
+              "patterns": [
+                "/users/profiles",
+                "/users/*/settings"
+              ],
+              "path": "/users/123/settings"
+            }
+          ],
+          "parsedOutput": true
+        },
+        {
+          "input": "{\"patterns\": [\"/users/profiles\", \"/users/*/settings\"], \"path\": \"/users/profiles\"}",
+          "output": "true",
+          "parsedInput": [
+            {
+              "patterns": [
+                "/users/profiles",
+                "/users/*/settings"
+              ],
+              "path": "/users/profiles"
+            }
+          ],
+          "parsedOutput": true
+        },
+        {
+          "input": "{\"patterns\": [\"/admin/*\"], \"path\": \"/admin/dashboard/metrics\"}",
+          "output": "false",
+          "parsedInput": [
+            {
+              "patterns": [
+                "/admin/*"
+              ],
+              "path": "/admin/dashboard/metrics"
+            }
+          ],
+          "parsedOutput": false
+        },
+        {
+          "input": "{\"patterns\": [\"/products/*/reviews/*\"], \"path\": \"/products/42/reviews/99\"}",
+          "output": "true",
+          "parsedInput": [
+            {
+              "patterns": [
+                "/products/*/reviews/*"
+              ],
+              "path": "/products/42/reviews/99"
+            }
+          ],
+          "parsedOutput": true
+        },
+        {
+          "input": "{\"patterns\": [], \"path\": \"/home\"}",
+          "output": "false",
+          "parsedInput": [
+            {
+              "patterns": [],
+              "path": "/home"
+            }
+          ],
+          "parsedOutput": false
+        }
+      ],
+      "hints": [
+        "First, split both the patterns and the request path into segments using '/' as the delimiter.",
+        "Iterate through each pattern and compare it segment by segment with the request path.",
+        "A hash map or a set could be used for faster lookups, but a simple iteration is a good starting point."
+      ]
+    },
+    {
+      "id": "apiRateLimiter",
+      "title": "API Rate Limiter",
+      "difficulty": "Medium",
+      "category": "Algorithms",
+      "description": "To protect your service from abuse, you need to implement a request rate limiter. You will be given a stream of incoming requests, each with a unique user ID and a timestamp. Your function must process these requests in chronological order and decide whether to allow or deny each one.\n\nThe rule is: a user can make at most `maxRequests` within a `timeWindow` in seconds. A request from a user at `timestamp` is allowed only if they have made fewer than `maxRequests` in the time interval `[timestamp - timeWindow + 1, timestamp]`.\n\nImplement a function that takes `maxRequests`, `timeWindow`, and a list of requests (tuples of `(timestamp, userId)`), and returns a list of booleans indicating the decision for each request.",
+      "functionName": "apiRateLimiter",
+      "testCases": [
+        {
+          "input": "{\"maxRequests\": 2, \"timeWindow\": 5, \"requests\": [[1, 101], [2, 101], [3, 101]]}",
+          "output": "[true, true, false]",
+          "parsedInput": [
+            {
+              "maxRequests": 2,
+              "timeWindow": 5,
+              "requests": [
+                [
+                  1,
+                  101
+                ],
+                [
+                  2,
+                  101
+                ],
+                [
+                  3,
+                  101
+                ]
+              ]
+            }
+          ],
+          "parsedOutput": "[true, true, false]"
+        },
+        {
+          "input": "{\"maxRequests\": 2, \"timeWindow\": 5, \"requests\": [[1, 101], [2, 102], [3, 101], [6, 101], [7, 101]]}",
+          "output": "[true, true, true, true, false]",
+          "parsedInput": [
+            {
+              "maxRequests": 2,
+              "timeWindow": 5,
+              "requests": [
+                [
+                  1,
+                  101
+                ],
+                [
+                  2,
+                  102
+                ],
+                [
+                  3,
+                  101
+                ],
+                [
+                  6,
+                  101
+                ],
+                [
+                  7,
+                  101
+                ]
+              ]
+            }
+          ],
+          "parsedOutput": "[true, true, true, true, false]"
+        },
+        {
+          "input": "{\"maxRequests\": 3, \"timeWindow\": 10, \"requests\": [[1, 101], [1, 101], [1, 102], [1, 101], [2, 101]]}",
+          "output": "[true, true, true, true, false]",
+          "parsedInput": [
+            {
+              "maxRequests": 3,
+              "timeWindow": 10,
+              "requests": [
+                [
+                  1,
+                  101
+                ],
+                [
+                  1,
+                  101
+                ],
+                [
+                  1,
+                  102
+                ],
+                [
+                  1,
+                  101
+                ],
+                [
+                  2,
+                  101
+                ]
+              ]
+            }
+          ],
+          "parsedOutput": "[true, true, true, true, false]"
+        },
+        {
+          "input": "{\"maxRequests\": 1, \"timeWindow\": 100, \"requests\": []}",
+          "output": "[]",
+          "parsedInput": [
+            {
+              "maxRequests": 1,
+              "timeWindow": 100,
+              "requests": []
+            }
+          ],
+          "parsedOutput": []
+        },
+        {
+          "input": "{\"maxRequests\": 1, \"timeWindow\": 1, \"requests\": [[1, 101], [2, 101], [3, 101]]}",
+          "output": "[true, true, true]",
+          "parsedInput": [
+            {
+              "maxRequests": 1,
+              "timeWindow": 1,
+              "requests": [
+                [
+                  1,
+                  101
+                ],
+                [
+                  2,
+                  101
+                ],
+                [
+                  3,
+                  101
+                ]
+              ]
+            }
+          ],
+          "parsedOutput": "[true, true, true]"
+        }
+      ],
+      "hints": [
+        "You'll need to maintain the timestamps of recent requests for each user. A hash map where keys are user IDs is a good way to store this state.",
+        "For each user, what data structure would be efficient for storing timestamps and removing old ones?",
+        "Consider using a queue or a deque for each user to implement a 'sliding window' of timestamps."
+      ]
+    },
+    {
+      "id": "realtimeLeaderboardTopK",
+      "title": "Real-time Leaderboard Top K",
+      "difficulty": "Hard",
+      "category": "Problem Solving",
+      "description": "You are developing a real-time analytics dashboard that includes a leaderboard. The system receives a continuous stream of score updates for users. Your task is to create an efficient function that can calculate the top K users at any given point.\n\nImplement a function `getTopKUsers` that takes a list of `scoreUpdates` and an integer `k`. Each update is a tuple `(userId, scoreChange)`. A user's total score is the sum of all their `scoreChange` values. The function must return a list of the top `k` user IDs, sorted by their final score in descending order. If there's a tie in scores, the user with the lexicographically smaller ID should come first.",
+      "functionName": "getTopKUsers",
+      "testCases": [
+        {
+          "input": "{\"scoreUpdates\": [[\"u1\", 10], [\"u2\", 20], [\"u1\", 5]], \"k\": 2}",
+          "output": "[\"u2\", \"u1\"]",
+          "parsedInput": [
+            {
+              "scoreUpdates": [
+                [
+                  "u1",
+                  10
+                ],
+                [
+                  "u2",
+                  20
+                ],
+                [
+                  "u1",
+                  5
+                ]
+              ],
+              "k": 2
+            }
+          ],
+          "parsedOutput": [
+            "u2",
+            "u1"
+          ]
+        },
+        {
+          "input": "{\"scoreUpdates\": [[\"u1\", 100], [\"u2\", 100], [\"u3\", 50]], \"k\": 2}",
+          "output": "[\"u1\", \"u2\"]",
+          "parsedInput": [
+            {
+              "scoreUpdates": [
+                [
+                  "u1",
+                  100
+                ],
+                [
+                  "u2",
+                  100
+                ],
+                [
+                  "u3",
+                  50
+                ]
+              ],
+              "k": 2
+            }
+          ],
+          "parsedOutput": [
+            "u1",
+            "u2"
+          ]
+        },
+        {
+          "input": "{\"scoreUpdates\": [[\"u5\", 50], [\"u2\", 80], [\"u3\", 50], [\"u1\", 90], [\"u4\", 80]], \"k\": 3}",
+          "output": "[\"u1\", \"u2\", \"u4\"]",
+          "parsedInput": [
+            {
+              "scoreUpdates": [
+                [
+                  "u5",
+                  50
+                ],
+                [
+                  "u2",
+                  80
+                ],
+                [
+                  "u3",
+                  50
+                ],
+                [
+                  "u1",
+                  90
+                ],
+                [
+                  "u4",
+                  80
+                ]
+              ],
+              "k": 3
+            }
+          ],
+          "parsedOutput": [
+            "u1",
+            "u2",
+            "u4"
+          ]
+        },
+        {
+          "input": "{\"scoreUpdates\": [[\"u1\", -10], [\"u2\", 20], [\"u1\", 10], [\"u3\", -5]], \"k\": 1}",
+          "output": "[\"u2\"]",
+          "parsedInput": [
+            {
+              "scoreUpdates": [
+                [
+                  "u1",
+                  -10
+                ],
+                [
+                  "u2",
+                  20
+                ],
+                [
+                  "u1",
+                  10
+                ],
+                [
+                  "u3",
+                  -5
+                ]
+              ],
+              "k": 1
+            }
+          ],
+          "parsedOutput": [
+            "u2"
+          ]
+        },
+        {
+          "input": "{\"scoreUpdates\": [[\"u1\", 10], [\"u2\", 20]], \"k\": 5}",
+          "output": "[\"u2\", \"u1\"]",
+          "parsedInput": [
+            {
+              "scoreUpdates": [
+                [
+                  "u1",
+                  10
+                ],
+                [
+                  "u2",
+                  20
+                ]
+              ],
+              "k": 5
+            }
+          ],
+          "parsedOutput": [
+            "u2",
+            "u1"
+          ]
+        }
+      ],
+      "hints": [
+        "First, you need to aggregate the scores for each user. A hash map is an excellent choice for this.",
+        "After aggregating, you need to find the top K elements. A full sort would work, but is it the most efficient method if K is much smaller than the total number of users?",
+        "Consider using a min-heap of size K to find the top K elements in O(N log K) time, which is more efficient than an O(N log N) sort."
+      ]
+    }
+  ]
+}

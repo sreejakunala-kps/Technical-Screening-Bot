@@ -1,0 +1,245 @@
+/* =========================================
+GLOBAL IMPORTS & BASE STYLES
+=========================================
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* Animated Blue Background for Landing Page */
+    background: linear-gradient(120deg, #1e3a8a, #2563eb, #60a5fa);
+    background-size: 200% 200%;
+    animation: gradientMove 10s ease infinite;
+    transition: background-color 0.5s ease;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Hide or Show pages (used by script.js) */
+.page-container.hidden {
+    display: none !important;
+}
+
+/* =========================================
+UPLOAD SCREEN STYLES (index.html)
+=========================================
+*/
+
+/* Card Transition */
+.bg-white\/90 {
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Upload Box Styling */
+.upload-box {
+    border: 2px dashed #cbd5e1; /* Gray-300 */
+    border-radius: 12px;
+    background-color: #f8fafc; /* Gray-50 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-box:hover {
+    border-color: #3b82f6; /* Blue-500 */
+    background-color: #eff6ff; /* Blue-50 */
+    transform: translateY(-2px);
+}
+
+.icon-bg {
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    transition: background-color 0.2s;
+}
+
+/* =========================================
+ASSESSMENT PAGE STYLES
+=========================================
+*/
+
+/* General Layout */
+#assessment-page {
+    /* Override body background when active */
+    background: #f4f6f9 !important; 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* Ensure it covers the upload page */
+}
+
+/* Fixed Top Bar */
+.top-bar {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e40af; /* Blue-700 */
+}
+
+.timer-box {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+/* Workspace (Main Content Area) */
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding-top: 60px; /* Account for the fixed top-bar */
+}
+
+/* Left Panel: Questions */
+.question-panel {
+    width: 40%;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+    user-select: none;
+}
+
+.tab-btn {
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #3b82f6;
+}
+
+.tab-btn.active {
+    color: #1e40af;
+    border-bottom-color: #1e40af;
+}
+
+/* Question Content */
+.question-body {
+    padding: 10px;
+}
+
+.q-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+    background-color: #10b981; /* Green */
+}
+
+.q-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.q-desc {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+/* Right Panel: Code Editor */
+.editor-panel {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    background-color: #1f2937; /* Dark background for code */
+}
+
+.editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #374151; /* Gray-700 */
+    color: white;
+    border-bottom: 1px solid #4b5563;
+}
+
+#language-select {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #4b5563;
+    color: white;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.actions button {
+    padding: 6px 12px;
+    margin-left: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+.run-btn {
+    background-color: #f59e0b; /* Amber */
+    color: black;
+}
+
+.submit-btn {
+    background-color: #10b981; /* Green */
+    color: white;
+}
+
+#code-editor {
+    flex-grow: 1;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    resize: none;
+    font-family: 'Fira Code', monospace; /* Monospaced font for code */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    background-color: #1f2937;
+    color: #ffffff;
+    caret-color: #3b82f6; /* Blue cursor */
+    outline: none;
+}

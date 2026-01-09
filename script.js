@@ -229,7 +229,7 @@ function getCodeTemplate(language, question) {
         javascript: `function ${fnName}(${question.testCases[0]?.input ? 'params' : ''}) {\n    // Write your code here\n    \n}\n\n// Test cases will run automatically`,
         java: `public class Solution {\n    public static void ${fnName}(${question.testCases[0]?.input ? 'params' : ''}) {\n        // Write your code here\n        \n    }\n}`,
         cpp: `#include <iostream>\nusing namespace std;\n\nvoid ${fnName}(${question.testCases[0]?.input ? 'params' : ''}) {\n    // Write your code here\n    \n}\n\nint main() {\n    return 0;\n}`,
-        c: `#include <stdio.h>\n\nvoid ${fnName}() {\n    // Write your code here\n}\n\nint main() {\n    ${fnName}();\n    return 0;\n}`
+         c: `#include <stdio.h>\n\nvoid ${fnName}(/* parameters */) {\n    // Write your code here\n    \n}\n\nint main() {\n    return 0;\n}`
     };
     
     return templates[language] || templates.python;
